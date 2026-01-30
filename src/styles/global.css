@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.inter {
+    font-family: 'Inter', sans-serif;
+}
+
+.bitcount {
+    font-family: 'Bitcount Single', sans-serif;
+}
