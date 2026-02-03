@@ -3,16 +3,27 @@
 // ------------------------
 const canvas = document.getElementById("pixel-canvas");
 const ctx = canvas.getContext("2d");
+const section = document.getElementById("pixel-section");
 
 let w, h;
 let particles = [];
 let mouse = { x: 0, y: 0 };
+
+// ------------------------
+// Centro personalizable
+// ------------------------
+let CENTER_X = null; // si es null, se usa w/2
+let CENTER_Y = 350; // si es null, se usa h/2
 let CENTER_RADIUS = 200;
 
 // ------------------------
 // Configuración personalizable
 // ------------------------
-const TEXT_LINES = ["bienvenido a mi", "portfolio."];
+const TEXT_LINES = [
+    { text: "bienvenido a mi", yOffset: -50 },
+    { text: "portfolio.", yOffset: 50 },
+];
+
 const FONT_SIZE = 100;
 const GAP = 4;
 const TEXT_SPEED = 0.05;
@@ -24,10 +35,11 @@ const MAX_STAR_BLUR = 5;
 // ------------------------
 // Control de dispersión central
 // ------------------------
-let CENTER_DENSITY = 0.2; // cuanto menor, más concentradas en el centro
-let EDGE_MARGIN = 50;     // margen mínimo alrededor de la pantalla
+let CENTER_DENSITY = 0.2;
 
+// ------------------------
 // Función para generar números con distribución normal (Gauss) centrada
+// ------------------------
 function randomGaussian(mean, stdDev) {
     let u = 0, v = 0;
     while (u === 0) u = Math.random();
@@ -37,11 +49,25 @@ function randomGaussian(mean, stdDev) {
 }
 
 // ------------------------
-// Redimensionar
+// Redimensionar canvas respetando padding
 // ------------------------
 function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
+    const style = getComputedStyle(section);
+    const paddingLeft = parseFloat(style.paddingLeft);
+    const paddingRight = parseFloat(style.paddingRight);
+    const paddingTop = parseFloat(style.paddingTop);
+    const paddingBottom = parseFloat(style.paddingBottom);
+
+    w = canvas.width = window.innerWidth - paddingLeft - paddingRight;
+    h = canvas.height = window.innerHeight - paddingTop - paddingBottom;
+
+    canvas.style.left = `${paddingLeft}px`;
+    canvas.style.top = `${paddingTop}px`;
+
+    // Si no se definió centro, usar el centro de la pantalla
+    if (CENTER_X === null) CENTER_X = w / 2;
+    if (CENTER_Y === null) CENTER_Y = h / 2;
+
     initParticles();
 }
 
@@ -57,31 +83,27 @@ function initParticles() {
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    //ctx.font = `bold ${FONT_SIZE}px sans-serif`;
-    //ctx.font = `bold ${FONT_SIZE}px 'Inter', sans-serif`;
     ctx.font = `bold ${FONT_SIZE}px 'Bitcount Single', monospace`;
 
-
-    const lineHeight = FONT_SIZE * 1.2;
-    TEXT_LINES.forEach((line, i) => {
-        const y = h / 2 + (i - TEXT_LINES.length / 2 + 0.5) * lineHeight;
-        ctx.fillText(line, w / 2, y);
+    // Dibujar todos los textos
+    TEXT_LINES.forEach((line) => {
+        const y = CENTER_Y + (line.yOffset || 0);
+        const x = CENTER_X + (line.xOffset || 0);
+        ctx.fillText(line.text, x, y);
     });
 
     const imageData = ctx.getImageData(0, 0, w, h).data;
     ctx.clearRect(0, 0, w, h);
 
-    // desviación estándar basada en el tamaño del canvas
     const stdDevX = (w / 2) * CENTER_DENSITY;
     const stdDevY = (h / 2) * CENTER_DENSITY;
 
-    for (let y = EDGE_MARGIN; y < h - EDGE_MARGIN; y += GAP) {
-        for (let x = EDGE_MARGIN; x < w - EDGE_MARGIN; x += GAP) {
+    for (let y = 0; y < h; y += GAP) {
+        for (let x = 0; x < w; x += GAP) {
             const alpha = imageData[(y * w + x) * 4 + 3];
             if (alpha > 128) {
-                // Genera posición inicial más centrada
-                let px = Math.min(Math.max(randomGaussian(w / 2, stdDevX), EDGE_MARGIN), w - EDGE_MARGIN);
-                let py = Math.min(Math.max(randomGaussian(h / 2, stdDevY), EDGE_MARGIN), h - EDGE_MARGIN);
+                let px = Math.min(Math.max(randomGaussian(CENTER_X, stdDevX), 0), w);
+                let py = Math.min(Math.max(randomGaussian(CENTER_Y, stdDevY), 0), h);
 
                 particles.push({
                     x: px,
@@ -113,11 +135,10 @@ function floatParticle(p) {
     p.x += p.vx;
     p.y += p.vy;
 
-    // Mantener dentro del margen
-    if (p.x < EDGE_MARGIN) p.x = EDGE_MARGIN;
-    if (p.x > w - EDGE_MARGIN) p.x = w - EDGE_MARGIN;
-    if (p.y < EDGE_MARGIN) p.y = EDGE_MARGIN;
-    if (p.y > h - EDGE_MARGIN) p.y = h - EDGE_MARGIN;
+    if (p.x < 0) p.x = 0;
+    if (p.x > w) p.x = w;
+    if (p.y < 0) p.y = 0;
+    if (p.y > h) p.y = h;
 }
 
 function attractParticle(p) {
@@ -129,8 +150,8 @@ function attractParticle(p) {
 // Detectar cursor
 // ------------------------
 window.addEventListener("mousemove", e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+    mouse.x = e.clientX - parseFloat(getComputedStyle(section).paddingLeft);
+    mouse.y = e.clientY - parseFloat(getComputedStyle(section).paddingTop);
 });
 
 // ------------------------
@@ -140,8 +161,8 @@ function animate() {
     ctx.fillStyle = BACKGROUND_COLOR;
     ctx.fillRect(0, 0, w, h);
 
-    const dx = mouse.x - w / 2;
-    const dy = mouse.y - h / 2;
+    const dx = mouse.x - CENTER_X;
+    const dy = mouse.y - CENTER_Y;
     const dist = Math.hypot(dx, dy);
 
     const formingText = dist < CENTER_RADIUS;
