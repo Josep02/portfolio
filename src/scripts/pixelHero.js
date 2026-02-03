@@ -10,10 +10,11 @@ let particles = [];
 let mouse = { x: 0, y: 0 };
 
 // ------------------------
-// Centro personalizable
+// Altura configurable
 // ------------------------
-let CENTER_X = null; // si es null, se usa w/2
-let CENTER_Y = 350; // si es null, se usa h/2
+const CANVAS_HEIGHT = 700;
+let CENTER_X = null;
+let CENTER_Y = 350;
 let CENTER_RADIUS = 200;
 
 // ------------------------
@@ -24,10 +25,10 @@ const TEXT_LINES = [
     { text: "portfolio.", yOffset: 50 },
 ];
 
-const FONT_SIZE = 100;
+const FONT_SIZE = 120;
 const GAP = 4;
 const TEXT_SPEED = 0.05;
-const COLORS = ["#ffffff", "#c5c5c5ff", "#575757ff"];
+const COLORS = ["#ffffff", "#929292ff", "#575757ff"];
 const BACKGROUND_COLOR = "#0c0c0c";
 const STAR_CHANCE = 0.2;
 const MAX_STAR_BLUR = 5;
@@ -38,7 +39,12 @@ const MAX_STAR_BLUR = 5;
 let CENTER_DENSITY = 0.2;
 
 // ------------------------
-// Función para generar números con distribución normal (Gauss) centrada
+// Efecto parpadeo tipo luciérnaga
+// ------------------------
+const BLINK_CHANCE = 0.2; // 15% de partículas tendrán este efecto
+
+// ------------------------
+// Función Gaussiana
 // ------------------------
 function randomGaussian(mean, stdDev) {
     let u = 0, v = 0;
@@ -49,22 +55,19 @@ function randomGaussian(mean, stdDev) {
 }
 
 // ------------------------
-// Redimensionar canvas respetando padding
+// Redimensionar canvas
 // ------------------------
 function resize() {
     const style = getComputedStyle(section);
     const paddingLeft = parseFloat(style.paddingLeft);
     const paddingRight = parseFloat(style.paddingRight);
-    const paddingTop = parseFloat(style.paddingTop);
-    const paddingBottom = parseFloat(style.paddingBottom);
 
     w = canvas.width = window.innerWidth - paddingLeft - paddingRight;
-    h = canvas.height = window.innerHeight - paddingTop - paddingBottom;
+    h = canvas.height = CANVAS_HEIGHT;
 
     canvas.style.left = `${paddingLeft}px`;
-    canvas.style.top = `${paddingTop}px`;
+    canvas.style.top = `0px`;
 
-    // Si no se definió centro, usar el centro de la pantalla
     if (CENTER_X === null) CENTER_X = w / 2;
     if (CENTER_Y === null) CENTER_Y = h / 2;
 
@@ -85,7 +88,6 @@ function initParticles() {
     ctx.textBaseline = "middle";
     ctx.font = `bold ${FONT_SIZE}px 'Bitcount Single', monospace`;
 
-    // Dibujar todos los textos
     TEXT_LINES.forEach((line) => {
         const y = CENTER_Y + (line.yOffset || 0);
         const x = CENTER_X + (line.xOffset || 0);
@@ -115,7 +117,9 @@ function initParticles() {
                     vx: (Math.random() - 0.5) * 0.5,
                     vy: (Math.random() - 0.5) * 0.5,
                     star: Math.random() < STAR_CHANCE,
-                    starBlur: Math.random() * MAX_STAR_BLUR + 2
+                    starBlur: Math.random() * MAX_STAR_BLUR + 2,
+                    blink: Math.random() < BLINK_CHANCE, // particula con luciérnaga
+                    blinkOffset: Math.random() * Math.PI * 2 // fase inicial
                 });
             }
         }
@@ -157,7 +161,10 @@ window.addEventListener("mousemove", e => {
 // ------------------------
 // Loop de animación
 // ------------------------
+let frame = 0;
 function animate() {
+    frame += 0.05; // para el efecto luciérnaga
+
     ctx.fillStyle = BACKGROUND_COLOR;
     ctx.fillRect(0, 0, w, h);
 
@@ -174,6 +181,12 @@ function animate() {
             floatParticle(p);
         }
 
+        let alpha = 1;
+        if (p.blink) {
+            // parpadeo suave tipo luciérnaga
+            alpha = 0.5 + 0.5 * Math.sin(frame + p.blinkOffset);
+        }
+
         if (p.star) {
             ctx.shadowBlur = p.starBlur;
             ctx.shadowColor = p.color;
@@ -182,7 +195,9 @@ function animate() {
         }
 
         ctx.fillStyle = p.color;
+        ctx.globalAlpha = alpha; // aplicar parpadeo
         ctx.fillRect(p.x, p.y, p.size, p.size);
+        ctx.globalAlpha = 1; // reset
     });
 
     requestAnimationFrame(animate);
