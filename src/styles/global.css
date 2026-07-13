@@ -1,9 +1,155 @@
 @import "tailwindcss";
 
-.inter {
-    font-family: 'Inter', sans-serif;
+/* ------------------------------------------------------------------ */
+/*  Tokens                                                             */
+/* ------------------------------------------------------------------ */
+:root {
+  --bg: #0c0c0c;
+  --fg: #f5f5f5;
+  --muted: #8a8a8a;
+  --line: rgba(255, 255, 255, 0.12);
+  --pixel: "Bitcount Single", monospace;
+  --sans: "Inter", sans-serif;
 }
 
-.bitcount {
-    font-family: 'Bitcount Single', sans-serif;
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+}
+
+/* Selección con look retro */
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Tipografía                                                         */
+/* ------------------------------------------------------------------ */
+.font-pixel {
+  font-family: var(--pixel);
+  letter-spacing: 0.01em;
+}
+.inter {
+  font-family: var(--sans);
+}
+
+/* Glow sutil monocromo para titulares */
+.text-glow {
+  text-shadow:
+    0 0 1px rgba(255, 255, 255, 0.4),
+    0 0 14px rgba(255, 255, 255, 0.18);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Separador "dithered" (puntos, no línea plana)                      */
+/* ------------------------------------------------------------------ */
+.dither {
+  height: 2px;
+  border: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+  background-size: 6px 2px;
+  opacity: 0.5;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Card pixel: esquinas rectas, borde 2px, sombra dura que "salta"    */
+/* ------------------------------------------------------------------ */
+.pixel-card {
+  position: relative;
+  border: 2px solid var(--line);
+  background: #0e0e0e;
+  transition:
+    transform 0.12s steps(3),
+    box-shadow 0.12s steps(3),
+    border-color 0.12s steps(3);
+}
+.pixel-card:hover {
+  border-color: rgba(255, 255, 255, 0.55);
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 0 rgba(255, 255, 255, 0.18);
+}
+
+/* Botón pixel con efecto de "pulsación" dura */
+.pixel-btn {
+  display: inline-block;
+  border: 2px solid var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+  box-shadow: 5px 5px 0 0 rgba(255, 255, 255, 0.25);
+  transition:
+    transform 0.1s steps(2),
+    box-shadow 0.1s steps(2);
+}
+.pixel-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 rgba(255, 255, 255, 0.25);
+}
+.pixel-btn:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Chip de tecnología con look de tecla */
+.pixel-chip {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  transition: border-color 0.12s steps(3), background 0.12s steps(3);
+}
+.pixel-chip:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Capa de partículas ambiental (fija, detrás de todo)                */
+/* ------------------------------------------------------------------ */
+#ambient-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+/* Scanlines CRT muy sutiles sobre el hero */
+.crt-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Render nítido tipo pixel para imágenes/canvas */
+canvas,
+img {
+  image-rendering: pixelated;
+}
+
+/* Scrollbar discreta */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
