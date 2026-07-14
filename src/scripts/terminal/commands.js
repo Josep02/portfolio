@@ -2,6 +2,7 @@ import { BASE, term } from "./state.js";
 import { hackRun, matrixRun, nanoRun } from "./animations.js";
 
 const P = [
+  ["rogue", "PWA de fitness tracking con rutinas, cardio GPS y sistema de rangos (Next.js 16)"],
   ["cromoverse", "SaaS multi-tenant de cromos digitales (Next.js 16 + Supabase)"],
   ["mkgenia", "Web de agencia de automatización con IA (Next.js 14)"],
   ["crm-inmobiliario", "CRM a medida con roles y permisos (Next.js 15 + Supabase)"],
