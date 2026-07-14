@@ -26,7 +26,6 @@ export const COMMANDS = {
     run: () => {
       const unlocked = JSON.parse(localStorage.getItem('term-secrets') || '[]');
       const SECRETS = {
-        konami: "El código clásico de los 30 intentos",
         doom: "Modo Dios de los años 90",
         matrix: "¿Pastilla azul o pastilla roja?",
         hack: "Acceso no autorizado al mainframe",
@@ -35,7 +34,6 @@ export const COMMANDS = {
         hesoyam: "Salud, armadura y dinero en Los Santos",
         pokemon: "Hazte con todos",
         coffee: "Combustible para transformar café en código",
-        vim: "El editor del que nadie sabe cómo salir",
       };
       const out = ["Easter Eggs Ocultos:", ""];
       for (const [key, hint] of Object.entries(SECRETS)) {
@@ -102,15 +100,10 @@ export const COMMANDS = {
         ? ["", "Error 404: Sistema destruido. Por favor recargue la página. 💥", ""]
         : "El incidente será reportado. (Es broma, buen intento 😉)",
   },
-  "rm -rf /": {
-    run: () => ["", "Error 404: Sistema destruido. Por favor recargue la página. 💥"],
-  },
   exit: { run: () => "Proceso finalizado. Es broma, ¡aún queda mucho por ver! 😎" },
-  vim: { run: () => "Error: Tecla ESC atascada. ¡Buena suerte intentando salir!" },
   emacs: { run: () => "Emacs es un gran sistema operativo… solo le falta un buen editor 🙃" },
   ping: { run: () => "pong 🏓" },
   "42": { run: () => "La respuesta a la vida, el universo y todo lo demás. 🌌" },
-  konami: { run: () => "↑ ↑ ↓ ↓ ← → ← → B A. Has desbloqueado vidas infinitas. 🎮" },
   mario: { run: () => "It's-a me, Mario! 🍄 (Tu código limpio está en otro castillo)" },
   zelda: { run: () => "It's dangerous to go alone! Take this. 🗡️" },
   doom: { run: () => "Modo Dios activado. Ahora tu código compilará a la primera. 👹" },
@@ -157,7 +150,6 @@ export const ALIASES = {
   "alonso": "33",
   "el nano": "33",
   "fernando alonso": "33",
-  "konami code": "konami",
   "iddqd": "doom",
   "gta": "hesoyam",
   "pikachu": "pokemon",
