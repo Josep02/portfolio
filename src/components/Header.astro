@@ -10,12 +10,11 @@ const links = [
 
 <header class="sticky top-0 z-50 bg-[#0c0c0c]/90 backdrop-blur border-b border-white/10 text-white">
   <nav class="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
-    <a
-      href={base}
-      class="font-pixel text-lg text-glow hover:opacity-80 transition-opacity"
-    >
+    <a href={base} class="font-pixel text-lg text-glow hover:opacity-80 transition-opacity">
       Josep Ferrer Bañuls
     </a>
+
+    <!-- Nav escritorio -->
     <ul class="hidden sm:flex gap-6 text-sm text-white/70">
       {
         links.map((l) => (
@@ -27,5 +26,52 @@ const links = [
         ))
       }
     </ul>
+
+    <!-- Botón menú móvil -->
+    <button
+      id="menu-btn"
+      type="button"
+      class="sm:hidden font-pixel text-xl leading-none border-2 border-white/25 px-3 py-1.5 hover:border-white/60 transition-colors"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      ☰
+    </button>
   </nav>
+
+  <!-- Panel menú móvil -->
+  <div id="mobile-menu" class="hidden sm:hidden border-t border-white/10 bg-[#0c0c0c]/95 backdrop-blur">
+    <ul class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1 text-white/80">
+      {
+        links.map((l) => (
+          <li>
+            <a href={l.href} class="block py-2.5 font-pixel hover:text-white transition-colors">
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </header>
+
+<script>
+  const btn = document.getElementById("menu-btn");
+  const menu = document.getElementById("mobile-menu");
+
+  btn?.addEventListener("click", () => {
+    const hidden = menu?.classList.toggle("hidden");
+    btn.setAttribute("aria-expanded", String(!hidden));
+    btn.textContent = hidden ? "☰" : "✕";
+  });
+
+  // Cerrar el panel al pulsar un enlace (son anclas de la misma página)
+  menu?.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => {
+      menu.classList.add("hidden");
+      btn?.setAttribute("aria-expanded", "false");
+      if (btn) btn.textContent = "☰";
+    })
+  );
+</script>
