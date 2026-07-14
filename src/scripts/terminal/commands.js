@@ -86,11 +86,15 @@ export const COMMANDS = {
   },
   contact: {
     desc: "cómo contactarme",
-    run: () => "✉️  orriols002@gmail.com",
+    run: () => "✉️  josepferrer99@gmail.com",
   },
   social: {
     desc: "mis perfiles",
-    run: () => ["GitHub:   github.com/  (pendiente)", "LinkedIn: linkedin.com/  (pendiente)"],
+    run: () => [
+      "GitHub:    github.com/Josep02",
+      "LinkedIn:  linkedin.com/in/ferrerjosep",
+      "Instagram: instagram.com/josepferreer_",
+    ],
   },
   cv: {
     desc: "descarga mi currículum en PDF",
