@@ -26,7 +26,8 @@ if (body && term) {
     }
 
     const isSecret = [
-      "konami", "doom", "matrix", "hack", "42", "zelda", "hesoyam", "pokemon", "coffee", "vim"
+      "doom", "matrix", "hack", "42", "zelda", "hesoyam", "pokemon", "coffee",
+      "lumos", "fightclub", "pacman", "rickroll", "33"
     ].includes(resolved);
 
     if (isSecret) {
@@ -104,6 +105,22 @@ if (body && term) {
         input.value = "";
       }
       if (typed) typed.textContent = input.value;
+    } else if (e.key === "Tab") {
+      e.preventDefault();
+      const val = input.value.toLowerCase();
+      if (!val) return;
+      const allKeys = [
+        ...Object.keys(COMMANDS).filter(k => COMMANDS[k].desc),
+        ...Object.keys(ALIASES)
+      ];
+      const matches = allKeys.filter(k => k.startsWith(val));
+      if (matches.length === 1) {
+        input.value = matches[0];
+        if (typed) typed.textContent = input.value;
+      } else if (matches.length > 1) {
+        print(matches.join("  "), "term-hint");
+        scroll();
+      }
     } else if (e.key === "l" && e.ctrlKey) {
       e.preventDefault();
       body.innerHTML = "";

@@ -38,6 +38,7 @@ export const COMMANDS = {
         fightclub: "Regla número uno",
         pacman: "El comecocos original",
         rickroll: "Nunca te abandonaré",
+        "33": "El piloto más grande de la historia",
       };
       const out = ["Easter Eggs Ocultos:", ""];
       for (const [key, hint] of Object.entries(SECRETS)) {
@@ -85,11 +86,23 @@ export const COMMANDS = {
   },
   contact: {
     desc: "cómo contactarme",
-    run: () => "✉  orriols002@gmail.com",
+    run: () => "✉️  orriols002@gmail.com",
   },
   social: {
     desc: "mis perfiles",
     run: () => ["GitHub:   github.com/  (pendiente)", "LinkedIn: linkedin.com/  (pendiente)"],
+  },
+  cv: {
+    desc: "descarga mi currículum en PDF",
+    run: () => {
+      const link = document.createElement("a");
+      link.href = `${BASE}cv.pdf`;
+      link.download = "Josep_Ferrer_CV.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return "Descargando CV... 📄  (sí, puedo incorporarme de inmediato)";
+    }
   },
   goto: {
     desc: "navega a una sección: goto proyectos|stack|contacto",

@@ -1,4 +1,4 @@
-import { reduced, sleep, body } from "./state.js";
+import { reduced, sleep, body, BASE } from "./state.js";
 import { print, line, scroll, printPrompt, cursor } from "./core.js";
 
 export async function hackRun() {
@@ -91,7 +91,31 @@ export async function nanoRun() {
     g.restore();
   }
 
-  const scenes = [sampleText("33"), sampleText("EL NANO"), sampleDraw(drawCar)];
+  // Load alonso.png and sample its pixels
+  async function sampleImage(src) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        const pts = sampleDraw((g) => {
+          // fit image inside canvas maintaining aspect ratio
+          const scale = Math.min(cw / img.width, ch / img.height) * 0.92;
+          const w = img.width * scale;
+          const h = img.height * scale;
+          g.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+        });
+        resolve(pts);
+      };
+      img.onerror = () => resolve(sampleDraw(drawCar)); // fallback al coche
+      img.src = src;
+    });
+  }
+
+  const alonsoPts = await sampleImage(
+    (typeof BASE !== "undefined" ? BASE : "/") + "alonso.png"
+  );
+
+  const scenes = [sampleText("33"), sampleText("EL NANO"), alonsoPts];
   const N = 1500;
   const parts = Array.from({ length: N }, () => ({
     x: Math.random() * cw,
