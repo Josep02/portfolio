@@ -26,15 +26,15 @@ export const COMMANDS = {
     run: () => {
       const unlocked = JSON.parse(localStorage.getItem('term-secrets') || '[]');
       const SECRETS = {
-        konami: "Código famoso de Konami para vidas infinitas",
-        doom: "Invocar a un Dios con IDDQD",
-        matrix: "Entrar en el mundo de Neo",
-        hack: "Hackear el servidor de la NASA",
-        "42": "La respuesta a la vida, el universo y todo",
-        zelda: "It's dangerous to go alone!",
-        hesoyam: "Truco para $250,000 en GTA San Andreas",
-        pokemon: "Un monstruo de bolsillo salvaje ha aparecido",
-        coffee: "Bebida indispensable para programar",
+        konami: "El código clásico de los 30 intentos",
+        doom: "Modo Dios de los años 90",
+        matrix: "¿Pastilla azul o pastilla roja?",
+        hack: "Acceso no autorizado al mainframe",
+        "42": "La respuesta definitiva",
+        zelda: "Es peligroso ir solo...",
+        hesoyam: "Salud, armadura y dinero en Los Santos",
+        pokemon: "Hazte con todos",
+        coffee: "Combustible para transformar café en código",
         vim: "El editor del que nadie sabe cómo salir",
       };
       const out = ["Easter Eggs Ocultos:", ""];
@@ -99,23 +99,23 @@ export const COMMANDS = {
   sudo: {
     run: (args) =>
       args.join(" ").includes("rm -rf")
-        ? ["", "😱  ...", "Es broma. No he borrado nada — esto es solo un portfolio 😄", ""]
-        : "Nice try 😏 — no tienes permisos de superusuario aquí.",
+        ? ["", "Error 404: Sistema destruido. Por favor recargue la página. 💥", ""]
+        : "El incidente será reportado. (Es broma, buen intento 😉)",
   },
   "rm -rf /": {
-    run: () => ["", "rm: no se puede borrar '/': operación no autorizada 🛡️", "(uf, por poco)"],
+    run: () => ["", "Error 404: Sistema destruido. Por favor recargue la página. 💥"],
   },
-  exit: { run: () => "No puedes salir. Estás atrapado en mi portfolio para siempre 👻" },
-  vim: { run: () => "Has entrado en Vim. Que la suerte te acompañe para salir. (:q! → )" },
+  exit: { run: () => "Proceso finalizado. Es broma, ¡aún queda mucho por ver! 😎" },
+  vim: { run: () => "Error: Tecla ESC atascada. ¡Buena suerte intentando salir!" },
   emacs: { run: () => "Emacs es un gran sistema operativo… solo le falta un buen editor 🙃" },
   ping: { run: () => "pong 🏓" },
   "42": { run: () => "La respuesta a la vida, el universo y todo lo demás. 🌌" },
   konami: { run: () => "↑ ↑ ↓ ↓ ← → ← → B A. Has desbloqueado vidas infinitas. 🎮" },
-  mario: { run: () => "It's-a me, Mario! 🍄 (Tu princesa está en otro castillo)" },
+  mario: { run: () => "It's-a me, Mario! 🍄 (Tu código limpio está en otro castillo)" },
   zelda: { run: () => "It's dangerous to go alone! Take this. 🗡️" },
-  doom: { run: () => "IDDQD. Modo Dios activado. 👹" },
-  hesoyam: { run: () => "HESOYAM activado. Salud, armadura y $250,000 añadidos. 💰🚗" },
-  pokemon: { run: () => "¡Un Pokémon salvaje ha aparecido! 👾 (Ojalá tuviera una Pokéball)" },
+  doom: { run: () => "Modo Dios activado. Ahora tu código compilará a la primera. 👹" },
+  hesoyam: { run: () => "Cheat activado: $250,000 añadidos para invertir en mi próxima startup. 💸" },
+  pokemon: { run: () => "¡Un Bug salvaje ha aparecido! Josep usó 'Console.log'... ¡Es muy efectivo! 👾" },
   coffee: {
     run: () => [
       "      ( (",
