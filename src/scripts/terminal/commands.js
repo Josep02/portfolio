@@ -34,13 +34,26 @@ export const COMMANDS = {
         hesoyam: "Salud, armadura y dinero en Los Santos",
         pokemon: "Hazte con todos",
         coffee: "Combustible para transformar café en código",
+        lumos: "Para iluminar la oscuridad",
+        fightclub: "Regla número uno",
+        pacman: "El comecocos original",
+        rickroll: "Nunca te abandonaré",
       };
       const out = ["Easter Eggs Ocultos:", ""];
       for (const [key, hint] of Object.entries(SECRETS)) {
         if (unlocked.includes(key)) {
           out.push(`  [x] ${key.padEnd(14)} - ${hint}`);
         } else {
-          const hiddenKey = key[0] + " " + "_ ".repeat(key.length - 1).trim();
+          let hiddenKey = key[0];
+          for (let i = 1; i < key.length; i++) {
+            if (i === key.length - 1 && key.length >= 5) {
+              hiddenKey += " " + key[i];
+            } else if (i === 1 && key.length >= 7) {
+              hiddenKey += " " + key[i];
+            } else {
+              hiddenKey += " _";
+            }
+          }
           out.push(`  [ ] ${hiddenKey.padEnd(14)} - ${hint}`);
         }
       }
@@ -109,6 +122,27 @@ export const COMMANDS = {
   doom: { run: () => "Modo Dios activado. Ahora tu código compilará a la primera. 👹" },
   hesoyam: { run: () => "Cheat activado: $250,000 añadidos para invertir en mi próxima startup. 💸" },
   pokemon: { run: () => "¡Un Bug salvaje ha aparecido! Josep usó 'Console.log'... ¡Es muy efectivo! 👾" },
+  fightclub: { run: () => "La primera regla del portfolio es: no se habla del portfolio. 🥊" },
+  pacman: { run: () => "Waka waka waka... 🟡👻" },
+  lumos: {
+    run: () => {
+      term.style.backgroundColor = "#fff";
+      term.style.color = "#000";
+      term.style.textShadow = "none";
+      setTimeout(() => {
+        term.style.backgroundColor = "";
+        term.style.color = "";
+        term.style.textShadow = "";
+      }, 3000);
+      return "Lumos Máxima. 🪄";
+    }
+  },
+  rickroll: {
+    run: () => {
+      window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+      return "Never gonna give you up... 🎶";
+    }
+  },
   coffee: {
     run: () => [
       "      ( (",
