@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+/* Fuentes self-hosted (subset latin, cubre acentos español) */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/portfolio/fonts/inter-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Bitcount Single";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/portfolio/fonts/bitcount-latin.woff2") format("woff2");
+}
+
 /* ------------------------------------------------------------------ */
 /*  Tokens                                                             */
 /* ------------------------------------------------------------------ */
@@ -44,6 +60,26 @@ body {
   text-shadow:
     0 0 1px rgba(255, 255, 255, 0.4),
     0 0 14px rgba(255, 255, 255, 0.18);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reveal al hacer scroll                                             */
+/* ------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* ------------------------------------------------------------------ */
