@@ -144,14 +144,8 @@ export const COMMANDS = {
   pacman: { run: () => "Waka waka waka... 🟡👻" },
   lumos: {
     run: () => {
-      term.style.backgroundColor = "#fff";
-      term.style.color = "#000";
-      term.style.textShadow = "none";
-      setTimeout(() => {
-        term.style.backgroundColor = "";
-        term.style.color = "";
-        term.style.textShadow = "";
-      }, 3000);
+      term.classList.add("lumos");
+      setTimeout(() => term.classList.remove("lumos"), 3000);
       return "Lumos Máxima. 🪄";
     }
   },

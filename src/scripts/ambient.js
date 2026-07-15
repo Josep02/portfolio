@@ -71,10 +71,16 @@ if (canvas) {
   }
 
   window.addEventListener("resize", resize);
-  document.addEventListener("visibilitychange", () =>
-    document.hidden ? stop() : start()
-  );
 
   resize();
-  start();
+
+  // Respeta prefers-reduced-motion: dibuja un frame estático, sin animar.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    draw();
+  } else {
+    document.addEventListener("visibilitychange", () =>
+      document.hidden ? stop() : start()
+    );
+    start();
+  }
 }

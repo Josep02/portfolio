@@ -184,6 +184,25 @@ body {
 .term.green .term-cursor {
   background: #5ef08a;
 }
+/* Easter egg: lumos — terminal blanca, fuente negra */
+.term.lumos {
+  background: #fff;
+}
+.term.lumos .term-body,
+.term.lumos .term-bar,
+.term.lumos .term-out,
+.term.lumos .term-typed,
+.term.lumos .term-hint,
+.term.lumos .term-matrix,
+.term.lumos .term-prompt,
+.term.lumos .term-big {
+  color: #000;
+  text-shadow: none;
+}
+.term.lumos .term-cursor,
+.term.lumos .term-dot {
+  background: #000;
+}
 .term-big {
   font-family: var(--pixel);
   font-size: clamp(1.5rem, 4.5vw, 2.5rem);
