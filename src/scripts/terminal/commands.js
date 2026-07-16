@@ -2,11 +2,60 @@ import { BASE, term } from "./state.js";
 import { hackRun, matrixRun, nanoRun } from "./animations.js";
 
 const P = [
-  ["rogue", "PWA de fitness tracking con rutinas, cardio GPS y sistema de rangos (Next.js 16)"],
+  ["rogue", "PWA de entreno y nutrición: rutinas, cardio GPS, escáner de alimentos y rangos (Next.js 16)"],
   ["cromoverse", "SaaS multi-tenant de cromos digitales (Next.js 16 + Supabase)"],
-  ["mkgenia", "Web de agencia de automatización con IA (Next.js 14)"],
-  ["crm-inmobiliario", "CRM a medida con roles y permisos (Next.js 15 + Supabase)"],
 ];
+
+// Modal de vídeo (YouTube embebido). Cierra con botón, Esc o clic fuera.
+function openVideoModal(videoId, title) {
+  document.getElementById("video-modal")?.remove();
+
+  const overlay = document.createElement("div");
+  overlay.id = "video-modal";
+  overlay.className = "modal";
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("aria-label", title);
+
+  const box = document.createElement("div");
+  box.className = "modal-box modal-box-wide";
+
+  const bar = document.createElement("div");
+  bar.className = "modal-bar";
+  bar.innerHTML = `<span>${title}</span>`;
+
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "modal-close";
+  close.setAttribute("aria-label", "Cerrar vídeo");
+  close.textContent = "✕";
+  bar.appendChild(close);
+
+  const frame = document.createElement("iframe");
+  frame.className = "modal-frame";
+  frame.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+  frame.allow = "autoplay; encrypted-media";
+  frame.allowFullscreen = true;
+  frame.referrerPolicy = "strict-origin-when-cross-origin";
+
+  box.append(bar, frame);
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+
+  function destroy() {
+    overlay.remove();
+    document.removeEventListener("keydown", onKey);
+  }
+  function onKey(e) {
+    if (e.key === "Escape") destroy();
+  }
+  close.addEventListener("click", destroy);
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) destroy();
+  });
+  document.addEventListener("keydown", onKey);
+  close.focus();
+}
 
 export const COMMANDS = {
   help: {
@@ -64,11 +113,21 @@ export const COMMANDS = {
   },
   whoami: {
     desc: "quién soy",
-    run: () => "Josep Ferrer Bañuls — desarrollador web full-stack.",
+    run: () => [
+      "Josep Ferrer Bañuls — Automation & AI Systems Developer.",
+      "Web & Mobile Development · Valencia, España 📍",
+    ],
   },
   stack: {
     desc: "tecnologías que uso",
-    run: () => "TypeScript · Next.js · Astro · React · Supabase · PostgreSQL · PHP · WordPress",
+    run: () => [
+      "Automatización/IA:  n8n · agentes inteligentes · integraciones API",
+      "Web:                Next.js · React · Astro · TypeScript · JavaScript",
+      "Backend/Datos:      PHP · Supabase · PostgreSQL · SQL",
+      "CMS:                WordPress",
+      "Móvil:              Kotlin",
+      "Otros:              Tailwind CSS · UI/UX",
+    ],
   },
   projects: {
     desc: "lista mis proyectos",
@@ -80,9 +139,17 @@ export const COMMANDS = {
   about: {
     desc: "sobre mí",
     run: () => [
-      "Diseño y programo aplicaciones web de principio a fin: de la",
-      "interfaz a la base de datos. Ecosistema React (Next/Astro) +",
-      "Supabase, y amplia experiencia en PHP y WordPress.",
+      "Desarrollador especializado en automatización, integraciones e IA",
+      "aplicada a negocio. Construyo sistemas digitales completos: webs,",
+      "plataformas, apps móviles y automatizaciones que conectan",
+      "herramientas, centralizan datos y eliminan tareas manuales.",
+      "",
+      "Frontend y backend: Next.js, JavaScript, PHP, WordPress y Kotlin",
+      "para móvil. APIs, bases de datos e integraciones entre servicios.",
+      "Automatizaciones con n8n. Base sólida en UI/UX.",
+      "",
+      "Ahora enfocado en automatización inteligente, agentes de IA e",
+      "integración de modelos dentro de flujos reales, no experimentales.",
     ],
   },
   contact: {
@@ -121,7 +188,6 @@ export const COMMANDS = {
       return `→ navegando a #${target}`;
     },
   },
-  date: { desc: "fecha y hora", run: () => new Date().toString() },
   clear: { desc: "limpia la pantalla", run: () => "\0CLEAR" },
 
   // ---- Easter eggs (sin desc: no salen en 'help') -------------
@@ -151,7 +217,7 @@ export const COMMANDS = {
   },
   rickroll: {
     run: () => {
-      window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+      openVideoModal("dQw4w9WgXcQ", "never-gonna-give-you-up.mp4");
       return "Never gonna give you up... 🎶";
     }
   },
@@ -185,6 +251,8 @@ export const ALIASES = {
   "ls proyectos/": "projects",
   "ls -la": "projects",
   "cat about.txt": "about",
+  "curriculum": "cv",
+  "resume": "cv",
   "email": "contact",
   "links": "social",
   "cls": "clear",

@@ -1,0 +1,214 @@
+---
+// Página de currículum. Sirve de dos formas:
+//  1. Como ruta visitable /cv
+//  2. Como fuente del PDF: `npm run cv:pdf` la imprime con Chrome headless
+//     a public/cv.pdf, que es lo que descarga el comando `cv` de la terminal.
+import "../styles/global.css";
+
+const experiencia = [
+  {
+    empresa: "Grupo Hogares Inmobiliarias",
+    rol: "Desarrollador Web & Digital Media Assistant",
+    fechas: "sep 2025 — actualidad",
+    lugar: "Valencia",
+    tareas: [
+      "Diseño, desarrollo y mantenimiento de la plataforma web corporativa.",
+      "Arquitectura e implementación de integraciones entre la web y el CRM mediante API.",
+      "Flujos de datos y automatizaciones para coordinar herramientas digitales, reduciendo procesos manuales.",
+      "Optimización continua de rendimiento, seguridad y estabilidad.",
+      "Digitalización de procesos de negocio junto a dirección.",
+    ],
+  },
+  {
+    empresa: "Invergares Capital",
+    rol: "Desarrollador Web & Digital Media Assistant",
+    fechas: "mar 2025 — ago 2025",
+    lugar: "Valencia",
+    tareas: [
+      "Desarrollo y mantenimiento de sitios WordPress optimizados para SEO.",
+      "Creación de contenido digital y adaptación visual con Photoshop.",
+      "Coordinación con el equipo de marketing para integrar campañas.",
+    ],
+  },
+  {
+    empresa: "CG Entertainment Srl",
+    rol: "Administrador de base de datos",
+    fechas: "mar 2023 — jun 2023",
+    lugar: "Prato, Italia",
+    tareas: [
+      "Gestión y optimización de bases de datos empresariales.",
+      "Control de integridad y respaldo de información.",
+      "Soporte a desarrollo interno en SQL.",
+    ],
+  },
+  {
+    empresa: "Trasit s.r.l.s.",
+    rol: "Técnico de mantenimiento",
+    fechas: "may 2021 — jul 2021",
+    lugar: "Florencia, Italia",
+    tareas: [
+      "Instalación y mantenimiento de software técnico.",
+      "Diagnóstico y resolución de fallos de hardware.",
+    ],
+  },
+];
+
+const proyectos = [
+  {
+    nombre: "Rogue",
+    desc: "PWA de entreno y nutrición: rutinas, cardio con GPS, escáner de alimentos con BarcodeDetector + Open Food Facts y rangos por músculo.",
+    stack: "Next.js 16 · React 19 · TypeScript · Supabase · Leaflet",
+  },
+  {
+    nombre: "Cromoverse",
+    desc: "SaaS multi-tenant de coleccionismo digital: cromos únicos, apertura de sobres, intercambios y tema por cliente.",
+    stack: "Next.js 16 · Supabase · PostgreSQL · TypeScript",
+  },
+];
+
+const educacion = [
+  ["CFGS Desarrollo de Aplicaciones Multiplataforma", "IES Serpis", "2024 — 2025"],
+  ["CFGS Desarrollo de Aplicaciones Web", "IES Enric Valor, Pego", "2021 — 2023"],
+  ["CFGM Sistemas Microinformáticos y Redes", "IES Enric Valor, Pego", "2019 — 2021"],
+];
+
+const stack = [
+  ["Automatización & IA", "n8n · Agentes inteligentes · Integraciones API"],
+  ["Web", "Next.js · React · Astro · TypeScript · JavaScript · Tailwind CSS"],
+  ["Backend & Datos", "PHP · Supabase · PostgreSQL · SQL · APIs REST"],
+  ["CMS & Móvil", "WordPress · Kotlin"],
+];
+
+const idiomas = [
+  ["Español", "Nativo"],
+  ["Valenciano", "Nativo"],
+  ["Inglés", "Professional working"],
+  ["Italiano", "Professional working"],
+];
+---
+
+<!doctype html>
+<html lang="es" class="cv-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Josep Ferrer Bañuls — CV</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body class="cv-page">
+    <main>
+      <!-- Hoja 1: cabecera, perfil y experiencia -->
+      <section class="cv-sheet">
+        <!-- Cabecera -->
+      <header class="cv-head">
+        <h1 class="font-pixel cv-name">Josep Ferrer Bañuls</h1>
+        <p class="cv-role">Automation &amp; AI Systems Developer · Web &amp; Mobile Development</p>
+        <p class="cv-meta">
+          Valencia, España · josepferrer99@gmail.com · 673 298 925<br />
+          josep02.github.io/portfolio · github.com/Josep02 · linkedin.com/in/ferrerjosep
+        </p>
+      </header>
+
+      <!-- Perfil -->
+      <section class="cv-block">
+        <h2 class="font-pixel cv-h2">// Perfil</h2>
+        <p class="cv-text">
+          Desarrollador especializado en automatización, integraciones e IA aplicada a
+          negocio. Construyo sistemas digitales completos: aplicaciones web, plataformas,
+          apps móviles y automatizaciones que conectan herramientas entre sí, centralizan
+          datos y eliminan tareas manuales repetitivas en operaciones reales. Trabajo tanto
+          la parte visual como la lógica del sistema: APIs, bases de datos e integraciones
+          entre servicios. Base sólida en UI/UX.
+        </p>
+      </section>
+
+      <!-- Experiencia -->
+      <section class="cv-block">
+        <h2 class="font-pixel cv-h2">// Experiencia</h2>
+        {
+          experiencia.map((e) => (
+            <article class="cv-item">
+              <div class="cv-item-head">
+                <h3 class="font-pixel cv-h3">{e.empresa}</h3>
+                <span class="cv-dates">{e.fechas}</span>
+              </div>
+              <p class="cv-sub">
+                {e.rol} · {e.lugar}
+              </p>
+              <ul class="cv-list">
+                {e.tareas.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+      </section>
+
+      </section>
+
+      <!-- Hoja 2: proyectos, stack, formación e idiomas -->
+      <section class="cv-sheet">
+      <!-- Proyectos -->
+      <section class="cv-block">
+        <h2 class="font-pixel cv-h2">// Proyectos</h2>
+        {
+          proyectos.map((p) => (
+            <article class="cv-item">
+              <h3 class="font-pixel cv-h3">{p.nombre}</h3>
+              <p class="cv-text">{p.desc}</p>
+              <p class="cv-stack">{p.stack}</p>
+            </article>
+          ))
+        }
+      </section>
+
+      <!-- Stack -->
+      <section class="cv-block">
+        <h2 class="font-pixel cv-h2">// Stack</h2>
+        <dl class="cv-dl">
+          {
+            stack.map(([titulo, items]) => (
+              <>
+                <dt class="font-pixel">{titulo}</dt>
+                <dd>{items}</dd>
+              </>
+            ))
+          }
+        </dl>
+      </section>
+
+      <!-- Formación -->
+      <section class="cv-block">
+        <h2 class="font-pixel cv-h2">// Formación</h2>
+        {
+          educacion.map(([titulo, centro, fechas]) => (
+            <article class="cv-item">
+              <div class="cv-item-head">
+                <h3 class="font-pixel cv-h3">{titulo}</h3>
+                <span class="cv-dates">{fechas}</span>
+              </div>
+              <p class="cv-sub">{centro}</p>
+            </article>
+          ))
+        }
+      </section>
+
+      <!-- Idiomas -->
+      <section class="cv-block">
+        <h2 class="font-pixel cv-h2">// Idiomas</h2>
+        <dl class="cv-dl">
+          {
+            idiomas.map(([lengua, nivel]) => (
+              <>
+                <dt class="font-pixel">{lengua}</dt>
+                <dd>{nivel}</dd>
+              </>
+            ))
+          }
+        </dl>
+      </section>
+      </section>
+    </main>
+  </body>
+</html>

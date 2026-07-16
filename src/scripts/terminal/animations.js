@@ -196,9 +196,9 @@ export async function nanoRun() {
 
 const INTRO = [
   { cmd: "whoami" },
-  { out: "Josep Ferrer Bañuls — desarrollador web full-stack" },
+  { out: "Josep Ferrer Bañuls — Automation & AI Systems Developer · Valencia" },
   { cmd: "cat stack.txt" },
-  { out: "TypeScript · Next.js · Astro · React · Supabase · PHP · WordPress" },
+  { out: "n8n · Agentes IA · Next.js · TypeScript · PHP · WordPress · Kotlin" },
   { cmd: "./bienvenida.sh" },
   { out: "bienvenido a mi portfolio.", big: true },
 ];

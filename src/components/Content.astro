@@ -3,81 +3,172 @@ const proyectos = [
   {
     nombre: "Rogue",
     tipo: "PWA de fitness",
+    año: "2026",
+    estado: "En desarrollo",
+    rol: "Diseño y desarrollo completo",
     descripcion:
-      "App de fitness tracking mobile-first con seguimiento de rutinas, sesiones de entreno, cardio con GPS en mapa y sistema de rangos por grupos musculares.",
-    stack: ["Next.js 16", "TypeScript", "Tailwind v4", "Supabase"],
-    url: "#",
+      "PWA mobile-first de entreno y nutrición: rutinas, cardio con GPS, diario de comidas con escáner de códigos de barras y progreso gamificado con rangos por músculo.",
+    detalle:
+      "App completa de seguimiento físico: entreno, cardio y alimentación en un solo sitio. Mobile-first, con un shell único que simula el frame de una app nativa, navegación inferior fija e instalable como PWA. La idea es que registrar una serie entre descansos —o un alimento— sea instantáneo, y que el progreso, lo que cuesta ver en el gimnasio, se vuelva visible y gamificado.",
+    features: [
+      "Sesión de entreno con registro de series, temporizador de descanso automático y sustitución de ejercicios sobre la marcha",
+      "Sesiones minimizables a un mini-player global: sigues navegando por la app sin perder el entreno activo",
+      "Diario de comidas por franjas (desayuno, comida, cena, snack) con recuento de macros y objetivos nutricionales",
+      "Escáner de códigos de barras con la API nativa BarcodeDetector, que consulta Open Food Facts y trae macros y Nutri-Score",
+      "Despensa y platos propios reutilizables, con semáforo de salud del alimento",
+      "Planificador semanal de comidas",
+      "Sistema de rangos por músculo (Principiante → Maestro) calculado con fuerza relativa (1RM estimado / peso corporal) y volumen efectivo",
+      "Mapa muscular interactivo (heatmap) con el rango de cada zona",
+      "Cardio con tracking de rutas en tiempo real sobre mapa: distancia, ritmo y duración",
+      "Biblioteca de ejercicios con búsqueda, filtros por grupo/equipo/dificultad e instrucciones paso a paso",
+      "Editor de rutinas con reordenación por arrastre y soporte táctil real",
+      "Cuenta de usuario y sincronización en la nube con Supabase",
+    ],
+    reto: {
+      titulo: "El reto",
+      texto:
+        "Medir «cuánto has progresado» no es contar entrenos. El motor de rangos combina fuerza relativa (1RM estimado sobre tu peso corporal) y volumen efectivo por músculo, así que subir de rango significa algo real y no solo aparecer por el gimnasio.",
+    },
+    aprendizajes: [
+      "Estado global con React Context propio (sin Zustand ni librerías externas): stores separados para perfil, sesión activa, cardio, comidas y despensa",
+      "APIs nativas del navegador: BarcodeDetector para escanear códigos y geolocalización para las rutas",
+      "Integración con una API pública externa (Open Food Facts), normalizando sus datos a un modelo propio",
+      "Drag & drop con soporte táctil real usando @dnd-kit",
+      "PWA: manifest, service worker e instalación con uso offline básico",
+    ],
+    stack: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind v4",
+      "Supabase",
+      "Leaflet",
+      "dnd-kit",
+      "Open Food Facts",
+      "PWA",
+    ],
   },
   {
     nombre: "Cromoverse",
     tipo: "SaaS multi-tenant",
+    año: "2026",
+    estado: "En desarrollo",
+    rol: "Arquitectura y desarrollo",
     descripcion:
       "Plataforma de coleccionismo digital gamificado. Cromos únicos por usuario, sistema de sobres, intercambios y temas por tenant. Piloto: fiestas de Moros y Cristianos.",
-    stack: ["Next.js 16", "Supabase", "TypeScript", "Framer Motion"],
-    url: "#",
-  },
-  {
-    nombre: "mkgenia",
-    tipo: "Web de agencia",
-    descripcion:
-      "Web para una agencia de automatización con IA enfocada al sector inmobiliario. Animaciones fluidas, modo oscuro y demo de dashboard interactivo.",
-    stack: ["Next.js 14", "Tailwind CSS", "Framer Motion"],
-    url: "#",
-  },
-  {
-    nombre: "CRM Inmobiliario",
-    tipo: "Aplicación interna",
-    descripcion:
-      "CRM a medida con autenticación, roles y permisos por módulo (leads, captaciones, campañas, mensajes). Construido desde cero para máxima mantenibilidad.",
-    stack: ["Next.js 15", "shadcn/ui", "Supabase"],
-    url: "#",
+    detalle:
+      "SaaS multi-tenant donde cada cliente (una fiesta, un club, un evento) tiene su propia colección de cromos digitales con su tema visual. La jerarquía de datos es abstracta a propósito — Proyecto → Temporada → Colección → Cromo — para que sirva a cualquier caso sin tocar código.",
+    features: [
+      "Cromos como instancias únicas por usuario, verificables",
+      "Motor de apertura de sobres con reparto por rareza",
+      "Intercambios entre usuarios con ofertas y aceptación",
+      "Multi-tenant: módulos y tema visual configurables por cliente",
+      "Seguridad a nivel de fila (RLS) y modo demo sin credenciales",
+    ],
+    reto: {
+      titulo: "El reto",
+      texto:
+        "Que dos usuarios no puedan duplicar un cromo al intercambiar a la vez. El motor de mint, sobres e intercambios corre en transacciones con bloqueo de fila, así que una carrera entre peticiones falla limpia en vez de crear cromos de la nada.",
+    },
+    aprendizajes: [
+      "Arquitectura multi-tenant con tema y módulos por cliente",
+      "Concurrencia en base de datos: bloqueos y transacciones",
+      "Row Level Security en Supabase para aislar datos por tenant",
+    ],
+    stack: ["Next.js 16", "Supabase", "TypeScript", "PostgreSQL", "Framer Motion"],
   },
 ];
 
-const stack = [
-  "TypeScript",
-  "Next.js",
-  "Astro",
-  "React",
-  "Tailwind CSS",
-  "Supabase",
-  "PostgreSQL",
-  "Framer Motion",
-  "PHP",
-  "WordPress",
+const stackGroups = [
+  {
+    titulo: "Automatización & IA",
+    items: ["n8n", "Agentes inteligentes", "Integraciones API"],
+  },
+  {
+    titulo: "Web",
+    items: ["Next.js", "React", "Astro", "TypeScript", "JavaScript", "Tailwind CSS"],
+  },
+  {
+    titulo: "Backend & Datos",
+    items: ["PHP", "Supabase", "PostgreSQL", "SQL", "APIs REST"],
+  },
+  {
+    titulo: "CMS & Móvil",
+    items: ["WordPress", "Kotlin"],
+  },
+];
+
+const idiomas = [
+  ["Español", "Nativo"],
+  ["Valenciano", "Nativo"],
+  ["Inglés", "Professional working"],
+  ["Italiano", "Professional working"],
 ];
 ---
 
 <!-- Sobre mí -->
-<section id="sobre-mi" class="reveal max-w-3xl mx-auto px-4 py-24 scroll-mt-20">
+<section id="sobre-mi" class="reveal max-w-5xl mx-auto px-4 py-24 scroll-mt-20">
   <p class="font-pixel text-sm uppercase tracking-widest text-white/50 mb-4">// Sobre mí</p>
   <h2 class="font-pixel text-3xl sm:text-4xl leading-tight mb-6 text-glow">
-    Desarrollador web centrado en construir productos rápidos y bien hechos.
+    Construyo sistemas digitales completos, de la interfaz a la automatización.
   </h2>
-  <p class="text-lg text-white/70 leading-relaxed">
-    Diseño y programo aplicaciones web modernas de principio a fin: desde la interfaz
-    hasta la base de datos. Trabajo sobre todo con el ecosistema de React (Next.js,
-    Astro) y Supabase, y tengo amplia experiencia en PHP y WordPress — desde temas y
-    plugins a medida hasta webs corporativas completas. Siempre cuidando el
-    rendimiento, la experiencia de usuario y el código mantenible.
-  </p>
+  <div class="space-y-5 text-lg text-white/70 leading-relaxed">
+    <p>
+      Construyo sistemas digitales completos: aplicaciones web, plataformas, apps
+      móviles y automatizaciones que conectan herramientas entre sí, centralizan datos
+      y eliminan tareas manuales repetitivas en operaciones reales.
+    </p>
+    <p>
+      Trabajo tanto la parte visual como la lógica del sistema: APIs, bases de datos e
+      integraciones entre servicios. Desarrollo a medida con Next.js, JavaScript y PHP,
+      además de WordPress, y apps móviles con Kotlin. Diseño automatizaciones con n8n
+      que coordinan formularios, bases de datos, correo y plataformas externas sin
+      intervención manual.
+    </p>
+    <p>
+      Base sólida en UI/UX, así que los productos no solo funcionan: son claros y
+      coherentes. Actualmente enfocado en automatización inteligente, agentes de IA e
+      integración de modelos dentro de flujos de trabajo reales, no experimentales.
+    </p>
+  </div>
+
+  <ul class="flex flex-wrap gap-3 mt-8">
+    <li class="pixel-chip px-4 py-2 text-white/80 text-sm">📍 Valencia, España</li>
+    {
+      idiomas.map(([lengua, nivel]) => (
+        <li class="pixel-chip px-4 py-2 text-white/80 text-sm">
+          {lengua} <span class="text-white/45">· {nivel}</span>
+        </li>
+      ))
+    }
+  </ul>
 </section>
 
-<hr class="dither max-w-6xl mx-auto" />
+<hr class="dither max-w-5xl mx-auto" />
 
 <!-- Proyectos -->
 <section id="proyectos" class="reveal scroll-mt-20">
-  <div class="max-w-6xl mx-auto px-4 py-24">
+  <div class="max-w-5xl mx-auto px-4 py-24">
     <p class="font-pixel text-sm uppercase tracking-widest text-white/50 mb-4">// Proyectos</p>
     <h2 class="font-pixel text-3xl sm:text-4xl mb-12 text-glow">Algunos trabajos recientes</h2>
 
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-6 sm:grid-cols-2">
       {
-        proyectos.map((p) => (
-          <article class="pixel-card flex flex-col p-6">
-            <p class="font-pixel text-xs uppercase tracking-wider text-white/45 mb-2">
-              {p.tipo}
-            </p>
+        proyectos.map((p, i) => (
+          <button
+            type="button"
+            class="pixel-card group flex flex-col p-6 text-left cursor-pointer"
+            data-proj={i}
+            aria-haspopup="dialog"
+          >
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <p class="font-pixel text-xs uppercase tracking-wider text-white/45">
+                {p.tipo}
+              </p>
+              <span class="font-pixel text-[0.65rem] uppercase tracking-wider text-white/40 border border-white/15 px-2 py-1">
+                {p.estado}
+              </span>
+            </div>
             <h3 class="font-pixel text-xl mb-3">{p.nombre}</h3>
             <p class="text-white/70 leading-relaxed flex-1">{p.descripcion}</p>
             <ul class="flex flex-wrap gap-2 mt-5">
@@ -85,33 +176,154 @@ const stack = [
                 <li class="pixel-chip text-xs px-3 py-1 text-white/70">{s}</li>
               ))}
             </ul>
-          </article>
+            <span class="font-pixel text-xs text-white/45 mt-5 group-hover:text-white">
+              Ver detalles →
+            </span>
+          </button>
         ))
       }
     </div>
   </div>
 </section>
 
-<hr class="dither max-w-6xl mx-auto" />
+<!-- Modales de proyecto -->
+{
+  proyectos.map((p, i) => (
+    <div
+      id={`proj-${i}`}
+      class="modal modal-top"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`proj-${i}-title`}
+      hidden
+    >
+      <div class="modal-box">
+        <div class="modal-bar">
+          <span class="truncate">{p.nombre.toLowerCase()}.md</span>
+          <button type="button" class="modal-close" aria-label="Cerrar">
+            ✕
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <p class="font-pixel text-xs uppercase tracking-wider text-white/45 mb-1">
+            {p.tipo} · {p.año} · {p.estado}
+          </p>
+          <h3 id={`proj-${i}-title`} class="font-pixel text-2xl text-glow">
+            {p.nombre}
+          </h3>
+          <p class="text-white/50 text-sm mt-1 mb-6">{p.rol}</p>
+
+          <p class="text-white/75 leading-relaxed mb-7">{p.detalle}</p>
+
+          <p class="font-pixel text-xs uppercase tracking-wider text-white/45 mb-3">
+            // Qué hace
+          </p>
+          <ul class="space-y-2 mb-7 text-white/70 leading-relaxed">
+            {p.features.map((f) => (
+              <li class="flex gap-3">
+                <span class="text-white/30 select-none">▸</span>
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="proj-note mb-7">
+            <p class="font-pixel text-xs uppercase tracking-wider text-white/45 mb-2">
+              // {p.reto.titulo}
+            </p>
+            <p class="text-white/70 leading-relaxed">{p.reto.texto}</p>
+          </div>
+
+          <p class="font-pixel text-xs uppercase tracking-wider text-white/45 mb-3">
+            // Qué aprendí
+          </p>
+          <ul class="space-y-2 mb-7 text-white/70 leading-relaxed">
+            {p.aprendizajes.map((a) => (
+              <li class="flex gap-3">
+                <span class="text-white/30 select-none">▸</span>
+                <span>{a}</span>
+              </li>
+            ))}
+          </ul>
+
+          <p class="font-pixel text-xs uppercase tracking-wider text-white/45 mb-3">
+            // Stack
+          </p>
+          <ul class="flex flex-wrap gap-2">
+            {p.stack.map((s) => (
+              <li class="pixel-chip text-xs px-3 py-1 text-white/70">{s}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  ))
+}
+
+<script>
+  document.querySelectorAll("[data-proj]").forEach((card) => {
+    const modal = document.getElementById(`proj-${(card as HTMLElement).dataset.proj}`);
+    if (!modal) return;
+
+    // El modal nace dentro de <main class="relative z-10">, que crea un
+    // contexto de apilamiento y lo deja por debajo del header (z-50).
+    // Lo colgamos del body para que su z-index cuente de verdad.
+    document.body.appendChild(modal);
+
+    const close = () => {
+      modal.hidden = true;
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKey);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    const open = () => {
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", onKey);
+      modal.querySelector<HTMLButtonElement>(".modal-close")?.focus();
+    };
+
+    card.addEventListener("click", open);
+    modal.querySelector(".modal-close")?.addEventListener("click", close);
+    // Clic fuera de la caja cierra
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) close();
+    });
+  });
+</script>
+
+<hr class="dither max-w-5xl mx-auto" />
 
 <!-- Stack -->
-<section id="stack" class="reveal max-w-6xl mx-auto px-4 py-24 scroll-mt-20">
+<section id="stack" class="reveal max-w-5xl mx-auto px-4 py-24 scroll-mt-20">
   <p class="font-pixel text-sm uppercase tracking-widest text-white/50 mb-4">// Stack</p>
-  <h2 class="font-pixel text-3xl sm:text-4xl mb-8 text-glow">Herramientas con las que trabajo</h2>
-  <ul class="flex flex-wrap gap-3">
+  <h2 class="font-pixel text-3xl sm:text-4xl mb-10 text-glow">Herramientas con las que trabajo</h2>
+  <div class="space-y-8">
     {
-      stack.map((s) => (
-        <li class="pixel-chip px-4 py-2 text-white/80">{s}</li>
+      stackGroups.map((g) => (
+        <div>
+          <p class="font-pixel text-xs uppercase tracking-wider text-white/45 mb-3">
+            {g.titulo}
+          </p>
+          <ul class="flex flex-wrap gap-3">
+            {g.items.map((s) => (
+              <li class="pixel-chip px-4 py-2 text-white/80">{s}</li>
+            ))}
+          </ul>
+        </div>
       ))
     }
-  </ul>
+  </div>
 </section>
 
-<hr class="dither max-w-6xl mx-auto" />
+<hr class="dither max-w-5xl mx-auto" />
 
 <!-- Contacto -->
 <section id="contacto" class="reveal scroll-mt-20">
-  <div class="max-w-3xl mx-auto px-4 py-24 text-center">
+  <div class="max-w-5xl mx-auto px-4 py-24 text-center">
     <p class="font-pixel text-sm uppercase tracking-widest text-white/50 mb-4">// Contacto</p>
     <h2 class="font-pixel text-3xl sm:text-4xl mb-6 text-glow">¿Hablamos?</h2>
     <p class="text-lg text-white/70 mb-8">
