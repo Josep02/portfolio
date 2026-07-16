@@ -26,8 +26,8 @@ if (body && term) {
     }
 
     const isSecret = [
-      "doom", "matrix", "hack", "42", "zelda", "hesoyam", "pokemon", "coffee",
-      "lumos", "fightclub", "pacman", "rickroll", "33"
+      "doom", "matrix", "hack", "pokemon", "67",
+      "lumos", "pacman", "rickroll", "33"
     ].includes(resolved);
 
     if (isSecret) {

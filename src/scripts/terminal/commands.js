@@ -79,13 +79,9 @@ export const COMMANDS = {
         doom: "Modo Dios de los años 90",
         matrix: "¿Pastilla azul o pastilla roja?",
         hack: "Acceso no autorizado al mainframe",
-        "42": "La respuesta definitiva",
-        zelda: "Es peligroso ir solo...",
-        hesoyam: "Salud, armadura y dinero en Los Santos",
         pokemon: "Hazte con todos",
-        coffee: "Combustible para transformar café en código",
+        "67": "Ese número que no significa nada",
         lumos: "Para iluminar la oscuridad",
-        fightclub: "Regla número uno",
         pacman: "El comecocos original",
         rickroll: "Nunca te abandonaré",
         "33": "El piloto más grande de la historia",
@@ -200,13 +196,10 @@ export const COMMANDS = {
   exit: { run: () => "Proceso finalizado. Es broma, ¡aún queda mucho por ver! 😎" },
   emacs: { run: () => "Emacs es un gran sistema operativo… solo le falta un buen editor 🙃" },
   ping: { run: () => "pong 🏓" },
-  "42": { run: () => "La respuesta a la vida, el universo y todo lo demás. 🌌" },
   mario: { run: () => "It's-a me, Mario! 🍄 (Tu código limpio está en otro castillo)" },
-  zelda: { run: () => "It's dangerous to go alone! Take this. 🗡️" },
   doom: { run: () => "Modo Dios activado. Ahora tu código compilará a la primera. 👹" },
-  hesoyam: { run: () => "Cheat activado: $250,000 añadidos para invertir en mi próxima startup. 💸" },
   pokemon: { run: () => "¡Un Bug salvaje ha aparecido! Josep usó 'Console.log'... ¡Es muy efectivo! 👾" },
-  fightclub: { run: () => "La primera regla del portfolio es: no se habla del portfolio. 🥊" },
+  "67": { run: () => "6️⃣7️⃣ Siiiiixxx seveeeen! 🙌 (no preguntes, nadie lo sabe)" },
   pacman: { run: () => "Waka waka waka... 🟡👻" },
   lumos: {
     run: () => {
@@ -220,16 +213,6 @@ export const COMMANDS = {
       openVideoModal("dQw4w9WgXcQ", "never-gonna-give-you-up.mp4");
       return "Never gonna give you up... 🎶";
     }
-  },
-  coffee: {
-    run: () => [
-      "      ( (",
-      "       ) )",
-      "    .________.",
-      "    |        |]",
-      "    \\        /",
-      "     `------'   ☕  recargando cafeína...",
-    ],
   },
   theme: {
     run: () => {
@@ -265,6 +248,7 @@ export const ALIASES = {
   "el nano": "33",
   "fernando alonso": "33",
   "iddqd": "doom",
-  "gta": "hesoyam",
   "pikachu": "pokemon",
+  "six seven": "67",
+  "sixseven": "67",
 };
