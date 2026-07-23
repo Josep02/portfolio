@@ -2,7 +2,7 @@ import { BASE, term } from "./state.js";
 import { hackRun, matrixRun, nanoRun } from "./animations.js";
 
 const P = [
-  ["rogue", "PWA de entreno y nutrición: rutinas, cardio GPS, escáner de alimentos y rangos (Next.js 16)"],
+  ["rogue", "App Android + web de entreno y nutrición · rogue-two.vercel.app"],
   ["cromoverse", "SaaS multi-tenant de cromos digitales (Next.js 16 + Supabase)"],
 ];
 
